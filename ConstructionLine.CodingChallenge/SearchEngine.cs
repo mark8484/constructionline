@@ -27,6 +27,7 @@ namespace ConstructionLine.CodingChallenge
                 SizeCounts = new List<SizeCount>()
             };
 
+
             // Search for colour
             options.Colors.ForEach(searchShirtColor =>
             {
@@ -35,27 +36,29 @@ namespace ConstructionLine.CodingChallenge
             });
 
             // Color Counts.
-            searchResults.ColorCounts.AddRange(_shirts.GroupBy(shirt => shirt.Color)
-                      .SelectMany(groupOfSearch => groupOfSearch.Select
-                      (
-                          eachShirt => new ColorCount()
-                          {
-                              Color = eachShirt.Color,
-                              Count = searchResults.Shirts.Count(shirt => shirt.Color == eachShirt.Color)
-                          }
-                      )));
+
+            foreach (var item in Color.All)
+            {
+                var search = searchResults.Shirts.Where(x => x.Color.Id == item.Id).Select(x => x.Color).ToList();
+
+                searchResults.ColorCounts.Add(new ColorCount()
+                {
+                    Color = item,
+                    Count = search.Count()
+                });
+            }
 
             // Size Counts
-            searchResults.SizeCounts.AddRange(_shirts.GroupBy(shirt => shirt.Color)
-                     .SelectMany(groupOfSearch => groupOfSearch.Select
-                     (
-                         eachShirt => new SizeCount()
-                         {
-                             Size = eachShirt.Size,
-                             Count = searchResults.Shirts.Count(shirt => shirt.Size == eachShirt.Size)
-                         }
-                     )));
+            foreach (var item in Size.All)
+            {
+                var search = searchResults.Shirts.Where(x => x.Size.Id == item.Id).Select(x => x.Size).ToList();
 
+                searchResults.SizeCounts.Add(new SizeCount()
+                {
+                    Size = item,
+                    Count = search.Count()
+                });
+            }
 
             return searchResults;
         }
