@@ -15,13 +15,18 @@ namespace ConstructionLine.CodingChallenge.Tests
                 new Shirt(Guid.NewGuid(), "Red - Small", Size.Small, Color.Red),
                 new Shirt(Guid.NewGuid(), "Black - Medium", Size.Medium, Color.Black),
                 new Shirt(Guid.NewGuid(), "Blue - Large", Size.Large, Color.Blue),
+
+                // Added new colors due to runtime error on when executing tests.
+                 new Shirt(Guid.NewGuid(), "Yellow - Small", Size.XLarge, Color.Yellow),
+                 new Shirt(Guid.NewGuid(), "White - Medium", Size.XXLarge, Color.White)
             };
+
 
             var searchEngine = new SearchEngine(shirts);
 
             var searchOptions = new SearchOptions
             {
-                Colors = new List<Color> {Color.Red}
+                Colors = new List<Color> { Color.Red }
             };
 
             var results = searchEngine.Search(searchOptions);
